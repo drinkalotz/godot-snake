@@ -54,9 +54,7 @@ func _ready() -> void:
 	
 	for x in range(2, width - 2):
 		for y in range(2, height -2):
-			var tile = tile_map_layer.get_cell_tile_data(Vector2i(x, y))
-			if true: 
-				walkable_coordinates.append(Vector2i(x, y))
+			walkable_coordinates.append(Vector2i(x, y))
 	label.global_position = tile_map_layer.map_to_local(Vector2i(1, 1))
 	label.visible = true
 	label.text = score_string % score
@@ -65,8 +63,6 @@ func _ready() -> void:
 	new_apple.set_deferred("global_position", tile_map_layer.map_to_local(walkable_coordinates.pick_random()))
 	new_apple.set_deferred("visible", true)
 	new_apple._on_apple_eaten.connect(handle_apple_eaten)
-func _process(delta: float) -> void:
-	pass	
 	
 func snake_died():
 	death_timer.start()
@@ -74,7 +70,7 @@ func snake_died():
 func handle_apple_eaten(eaten_apple: Node2D):
 	eaten_apple.queue_free()
 	score += 1
-	var apples_to_spawn: int = score / 10 + 1
+	var apples_to_spawn: int = floor(score as float / 10) + 1 
 	snake.SPEED += 0.5
 	snake.grow_snake()
 	label.text = score_string % score
@@ -85,9 +81,6 @@ func handle_apple_eaten(eaten_apple: Node2D):
 		new_apple.set_deferred("global_position", tile_map_layer.map_to_local(walkable_coordinates.pick_random()))
 		new_apple.set_deferred("visible", true)
 		new_apple._on_apple_eaten.connect(handle_apple_eaten)
-	
-func is_walkable_tile(tile_id: Node2D):
-	pass
 
 	
 

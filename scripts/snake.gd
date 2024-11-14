@@ -26,7 +26,7 @@ func _ready() -> void:
 	segment_positions.append(segment_positions[0] - Vector2i(1, 0))
 	update_snake_positions()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var input_direction: Vector2i = Input.get_vector("left_ui", "right_ui", "up_ui", "down_ui")
 	
 	if input_direction != Vector2i.ZERO and input_direction != -direction:
@@ -155,7 +155,7 @@ func _on_death_timer_timeout() -> void:
 	queue_free()
 
 
-func _on_snake_head_area_body_entered(body: Node2D) -> void:
+func _on_snake_head_area_body_entered(_body: Node2D) -> void:
 	print('dying')
 	is_dying = true
 	die()
