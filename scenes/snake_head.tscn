@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsm5ygano45dv"]
+
+[ext_resource type="Texture2D" uid="uid://dhoupnm8pnope" path="res://assets/Objects/snake-graphics.png" id="1_gwdsq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_axvv5"]
+atlas = ExtResource("1_gwdsq")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0u4wd"]
+radius = 11.0
+
+[node name="snake_head" type="Node2D"]
+
+[node name="snake_head_sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.45, 0.45)
+texture = SubResource("AtlasTexture_axvv5")
+
+[node name="snake_head_area" type="Area2D" parent="."]
+collision_mask = 55
+
+[node name="snake_head_collision_box" type="CollisionShape2D" parent="snake_head_area"]
+shape = SubResource("CircleShape2D_0u4wd")

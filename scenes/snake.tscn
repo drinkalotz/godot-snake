@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cussfasv7xcke"]
+
+[ext_resource type="PackedScene" uid="uid://bsm5ygano45dv" path="res://scenes/snake_head.tscn" id="2_a6gio"]
+[ext_resource type="Script" path="res://scripts/snake.gd" id="2_qyt36"]
+[ext_resource type="PackedScene" uid="uid://dioar3lgb6gr5" path="res://scenes/snake_tail.tscn" id="3_lst60"]
+
+[node name="snake" type="CharacterBody2D"]
+script = ExtResource("2_qyt36")
+SPEED = 10.0
+initial_position = Vector2i(4, 5)
+grid_size = 28.0
+
+[node name="snake_head" parent="." instance=ExtResource("2_a6gio")]
+
+[node name="snake_tail" parent="." instance=ExtResource("3_lst60")]
+position = Vector2(-26, 0)
+
+[connection signal="body_entered" from="snake_head/snake_head_area" to="." method="_on_snake_head_area_body_entered"]
+
+[editable path="snake_head"]
+[editable path="snake_tail"]

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://fvnr1ibfhv6v"]
+
+[ext_resource type="Texture2D" uid="uid://dhoupnm8pnope" path="res://assets/Objects/snake-graphics.png" id="1_5fwuy"]
+[ext_resource type="Script" path="res://scripts/apple.gd" id="1_ejjbs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nwode"]
+atlas = ExtResource("1_5fwuy")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_25cj4"]
+radius = 12.0
+
+[node name="apple" type="Node2D"]
+visible = false
+script = ExtResource("1_ejjbs")
+
+[node name="apple_sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.45, 0.45)
+texture = SubResource("AtlasTexture_nwode")
+
+[node name="apple_area" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="apple_collision_box" type="CollisionShape2D" parent="apple_area"]
+position = Vector2(-1, 2)
+shape = SubResource("CircleShape2D_25cj4")
+
+[connection signal="area_entered" from="apple_area" to="." method="_on_apple_area_area_entered"]
+[connection signal="area_shape_entered" from="apple_area" to="." method="_on_apple_area_area_shape_entered"]
+[connection signal="body_entered" from="apple_area" to="." method="_on_apple_area_body_entered"]
+[connection signal="body_shape_entered" from="apple_area" to="." method="_on_apple_area_body_shape_entered"]
