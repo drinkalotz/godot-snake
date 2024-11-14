@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var SPEED: float = 2.0
+@export var SPEED: float = 5
 @export var initial_position: Vector2i = Vector2i(5, 5)  
 @export var grid_size: float = 28.8  
 
@@ -35,17 +35,13 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if is_dying:
 		return
-	#move_timer += delta
 	move_snake(delta)
-	#if move_timer >= 1.0 / SPEED:
-		#move_timer = 0.0
-		#move_snake()
 
 func move_snake(delta: float) -> void:
 	var move_distance = SPEED * grid_size * delta
-	move_progress += move_distance
-	
-	if move_progress >= grid_size:
+	if move_progress + move_distance >= grid_size:
+		direction = next_direction
+		move_progress = 0.0
 		direction = next_direction
 		
 		var head_new_position = segment_positions[0] + direction
@@ -56,6 +52,9 @@ func move_snake(delta: float) -> void:
 		update_head_rotation()
 		update_tail_rotation()
 		move_progress = 0.0
+	else:
+		move_progress += move_distance		
+		
 
 func update_snake_positions() -> void:
 	for i in range(segments.size()):
