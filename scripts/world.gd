@@ -41,12 +41,22 @@ func _ready() -> void:
 	tile_map_layer.set_cell(Vector2i(width - 1, height - 1), source_id, bottom_right_corner_border)
 
 	for x in range(1, width - 1):
+		var new_tile = null
 		tile_map_layer.set_cell(Vector2i(x, 0), source_id, top_border_array[x % top_border_array.size()])
+		new_tile = tile_map_layer.get_cell_tile_data(Vector2i(x, 0))
+		new_tile.z_index = 20
 		tile_map_layer.set_cell(Vector2i(x, height - 1), source_id, bottom_border_array[x % bottom_border_array.size()])
+		new_tile = tile_map_layer.get_cell_tile_data(Vector2i(x, height - 1))
+		new_tile.z_index = 20
 
 	for y in range(1, height - 1):
+		var new_tile = null
 		tile_map_layer.set_cell(Vector2i(0, y), source_id, left_border_array[y % left_border_array.size()])
+		new_tile = tile_map_layer.get_cell_tile_data(Vector2i(0, y))
+		new_tile.z_index = 20
 		tile_map_layer.set_cell(Vector2i(width - 1, y), source_id, right_border_array[y % right_border_array.size()])
+		new_tile = tile_map_layer.get_cell_tile_data(Vector2i(width - 1, y))
+		new_tile.z_index = 20
 
 	for x in range(1, width - 1):
 		for y in range(1, height - 1):
