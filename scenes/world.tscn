@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bkb0xi3pd2bp"]
 
 [ext_resource type="Texture2D" uid="uid://c3jwn36i2qyd2" path="res://assets/World/Tileset.png" id="1_1h26e"]
-[ext_resource type="Script" path="res://scenes/world.gd" id="1_bgaf4"]
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_748kr"]
 [ext_resource type="PackedScene" uid="uid://cussfasv7xcke" path="res://scenes/snake.tscn" id="4_ihk7y"]
 [ext_resource type="PackedScene" uid="uid://fvnr1ibfhv6v" path="res://scenes/apple.tscn" id="5_k62ug"]
 
@@ -336,7 +336,7 @@ physics_layer_0/collision_layer = 2
 sources/1 = SubResource("TileSetAtlasSource_2nj8x")
 
 [node name="world" type="Node2D"]
-script = ExtResource("1_bgaf4")
+script = ExtResource("1_748kr")
 
 [node name="tiles" type="TileMapLayer" parent="."]
 position = Vector2(1, 0)
