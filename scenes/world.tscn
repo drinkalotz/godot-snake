@@ -354,7 +354,7 @@ position = Vector2(262, 0)
 [node name="snake" parent="." instance=ExtResource("4_ihk7y")]
 
 [node name="death_timer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 0.5
 one_shot = true
 
 [connection signal="timeout" from="death_timer" to="." method="_on_death_timer_timeout"]

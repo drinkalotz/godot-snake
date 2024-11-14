@@ -4,7 +4,9 @@ extends Node2D
 @onready var tile_map_layer: TileMapLayer = $tiles
 @onready var snake: CharacterBody2D = $snake
 @onready var apple: PackedScene = preload("res://scenes/apple.tscn")
+@onready var end_game: PackedScene = preload("res://scenes/end_game.tscn")
 @onready var death_timer: Timer = $death_timer
+var apples = []
 var score: int = 0
 var score_string: String = "Score: %s"
 @onready var label: Label = $Label
@@ -32,7 +34,7 @@ var walkable_array = [
 
 func _ready() -> void:
 	snake._on_snake_died.connect(snake_died)
-	snake.SPEED = 5
+	snake.SPEED = 7
 	var source_id = 1
 	
 	tile_map_layer.set_cell(Vector2i(0, 0), source_id, top_left_corner_border)
@@ -68,11 +70,16 @@ func _ready() -> void:
 	label.global_position = tile_map_layer.map_to_local(Vector2i(1, 1))
 	label.visible = true
 	label.text = score_string % score
-	var new_apple = apple.instantiate()
-	add_child(new_apple)
-	new_apple.set_deferred("global_position", tile_map_layer.map_to_local(walkable_coordinates.pick_random()))
-	new_apple.set_deferred("visible", true)
-	new_apple._on_apple_eaten.connect(handle_apple_eaten)
+	for i in range(1, 5):
+		if apples.size() == 5:
+			pass
+		else:
+			var new_apple = apple.instantiate()
+			apples.append(new_apple)
+			add_child(new_apple)
+			new_apple.set_deferred("global_position", tile_map_layer.map_to_local(walkable_coordinates.pick_random()))
+			new_apple.set_deferred("visible", true)
+			new_apple._on_apple_eaten.connect(handle_apple_eaten)
 	
 func snake_died():
 	death_timer.start()
@@ -81,19 +88,28 @@ func handle_apple_eaten(eaten_apple: Node2D):
 	eaten_apple.queue_free()
 	score += 1
 	var apples_to_spawn: int = floor(score as float / 10) + 1 
-	snake.SPEED += 0.5
+	snake.SPEED += 0.2
 	snake.grow_snake()
 	label.text = score_string % score
-	for i in range(apples_to_spawn, apples_to_spawn + 1):
-		print(i)
-		var new_apple = apple.instantiate()
-		self.call_deferred("add_child", new_apple)
-		new_apple.set_deferred("global_position", tile_map_layer.map_to_local(walkable_coordinates.pick_random()))
-		new_apple.set_deferred("visible", true)
-		new_apple._on_apple_eaten.connect(handle_apple_eaten)
+	apples.pop_front()
+	#for i in range(apples_to_spawn, apples_to_spawn + 1):
+	for i in range(1, 5):
+		if apples.size() == 5:
+			pass
+		else:
+			var new_apple = apple.instantiate()
+			apples.append(new_apple)
+			self.call_deferred("add_child", new_apple)
+			new_apple.set_deferred("global_position", tile_map_layer.map_to_local(walkable_coordinates.pick_random()))
+			new_apple.set_deferred("visible", true)
+			new_apple._on_apple_eaten.connect(handle_apple_eaten)
 
 	
 
 
 func _on_death_timer_timeout() -> void:
-	get_tree().reload_current_scene()
+	var end_game_scene = end_game.instantiate()
+	end_game_scene.score = score
+	get_tree().root.add_child(end_game_scene)
+	queue_free()
+	
